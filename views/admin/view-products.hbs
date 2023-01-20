@@ -1,11 +1,14 @@
 <section>
+  <div class="row container ">
     <div class="ml-5" > <a href="admin/add-products" class="btn btn-success  mt-2">Add Products</a></div>
-<table class="table">
+<table class="table ml-4">
   <thead>
     <tr>
       <th scope="col">no.</th>
       <th scope="col">Product</th>
       <th scope="col">price</th>
+      <th scope="col">ategory</th>
+      <th scope="col">Description</th>
       <th scope="col">Image</th>
     </tr>
   </thead>
@@ -13,14 +16,17 @@
     {{#each products}}
     <tr>
       <th scope="row">1</th>
-      <td>{{this.Name}}</this></td>
-      <td>{{this.Price}}</td>
-      <td><img src="{{this.Image}}" style="width: 50px;"></td>
+      <td>{{this.Name}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.description}}</td>
+      <td><img src="/product-images/{{this._id}}.jpg" style="width: 100px;"></td>
     </tr>
     {{/each}}
   </tbody>
 
 </table>
+</div>
 </section>
 
 
