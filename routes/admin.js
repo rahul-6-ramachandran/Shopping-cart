@@ -1,34 +1,27 @@
 var express = require('express');
+const productHelpers = require('../helpers/product-helpers');
 var router = express.Router();
+var productHelper = require('../helpers/product-helpers')
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-  let products=[
-    {
-      Name:"Ziya",
-      Price:"45$",
-      Des:"ermgioejiwejij",
-      Image:"https://ziyastores.com/wp-content/uploads/2022/11/Animal-Horse-Hoodie-Men-Sweatshirt-Brand-Winter-Thin-Hooded-Pullover-Harajuku-Casual-Men-Women-Tracksuits-Hoody_9d0612c8-987a-4912-aa06-cdff88623ab4.png"
-    },
-    {
-      Name:"White rayon  ",
-      Price:"50$",
-      Des:"",
-      Image:"https://cdn.shopify.com/s/files/1/0623/8850/2700/products/WM0033_700x.png?v=1654782386"
-    },
-    {
-      Name:"Fancy Shirt",
-      Price:"76$",
-      Des:"",
-      Image:"https://images.meesho.com/images/products/50080135/is4ku_512.webp"
-    }
-  ]
-  res.render('admin/view-products',{admin:true,products})
+  productHelpers.getAllProducts().then((products)=>{
+    res.render('admin/view-products',{admin:true,products})
+  })
+  
 });
 router.get('/add-products',(req,res)=>{
-  res.render('admin/add-products')
+  res.render('admin/add-products',{admin:true})
 })
 router.post('/add-products',(req,res)=>{
-  console.log('successfully inserted');
+  console.log(req.body);
+  console.log(req.files.image);
+  productHelpers.addProducts(req.body,(_id)=>{
+    let image = req.files.image
+    image.mv('./public/product-images/'+_id+'.jpg',(err,done)=>{
+      if(!err) res.render('admin/add-products')
+      else console.log(err);
+    })
+    
+  })
 })
 module.exports = router;
